@@ -99,6 +99,7 @@ namespace PortalApp.API
             services.AddTransient<Seed>();
            services.AddScoped<IAuthRepository, AuthRepository>();
             services.AddScoped<IPortalRepository, PortalRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<LogUserActivity>();
         }
 

@@ -44,6 +44,12 @@ export const navigation: FuseNavigation[] = [
         icon     : 'edit',
         children : [
             {
+                id       : 'admin-users',
+                title    : 'Users',
+                type     : 'item',
+                url      : '/admin/admin-users',
+            },
+            {
                 id       : 'ctor-documents',
                 title    : 'Constructor of documents',
                 translate: 'NAV.CTOR_DOCUMENTS',

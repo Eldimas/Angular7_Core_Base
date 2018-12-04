@@ -12,18 +12,32 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace PortalApp.API.Controllers
 {
-    [ServiceFilter(typeof(LogUserActivity))]
+    [AllowAnonymous]
+    // [ServiceFilter(typeof(LogUserActivity))]
     [Route("api/[controller]")]
     [ApiController]
     public class UsersController : ControllerBase
     {
         private readonly IPortalRepository _repo;
+        private readonly IUserRepository _userRepo;
         private readonly IMapper _mapper;
+        
 
-        public UsersController(IPortalRepository repo, IMapper mapper)
+        public UsersController(IPortalRepository repo, IUserRepository userRepo, IMapper mapper)
         {
-            _mapper = mapper;
+           _mapper = mapper;
             _repo = repo;
+            _userRepo = userRepo;
+        }
+
+         // [Authorize(Policy = "RequireAdminRole")]
+        [HttpGet("getAllUsers")]
+        public async Task<IActionResult> GetSampleUsers() {
+            // var ni = ClaimTypes.NameIdentifier;
+            // var currentUserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            var users = await _userRepo.GetAllUsers();
+            var usersToReturn = _mapper.Map<IEnumerable<UserForListDto>>(users);
+            return Ok(usersToReturn);
         }
 
         [HttpGet]
@@ -54,7 +68,7 @@ namespace PortalApp.API.Controllers
         public async Task<IActionResult> GetUser(int id)
         {
             var isCurrentUser = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value) == id;
-            
+
             var user = await _repo.GetUser(id, isCurrentUser);
 
             var userToReturn = _mapper.Map<UserForDetailedDto>(user);
@@ -88,7 +102,7 @@ namespace PortalApp.API.Controllers
 
             if (like != null)
                 return BadRequest("You already like this user");
-            
+
             if (await _repo.GetUser(recipientId, false) == null)
                 return NotFound();
 
@@ -102,7 +116,7 @@ namespace PortalApp.API.Controllers
 
             if (await _repo.SaveAll())
                 return Ok();
-            
+
             return BadRequest("Failed to like user");
         }
     }
