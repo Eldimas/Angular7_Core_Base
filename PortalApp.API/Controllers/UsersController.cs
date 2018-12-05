@@ -32,7 +32,7 @@ namespace PortalApp.API.Controllers
 
          // [Authorize(Policy = "RequireAdminRole")]
         [HttpGet("getAllUsers")]
-        public async Task<IActionResult> GetSampleUsers() {
+        public async Task<IActionResult> GetAllUsers() {
             // var ni = ClaimTypes.NameIdentifier;
             // var currentUserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
             var users = await _userRepo.GetAllUsers();
@@ -67,13 +67,15 @@ namespace PortalApp.API.Controllers
         [HttpGet("{id}", Name = "GetUser")]
         public async Task<IActionResult> GetUser(int id)
         {
-            var isCurrentUser = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value) == id;
+            // var isCurrentUser = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value) == id;
+            var isCurrentUser = false;
 
             var user = await _repo.GetUser(id, isCurrentUser);
 
-            var userToReturn = _mapper.Map<UserForDetailedDto>(user);
+            // var userToReturn = _mapper.Map<UserForDetailedDto>(user);
 
-            return Ok(userToReturn);
+            // return Ok(userToReturn);
+             return Ok(user);
         }
 
         [HttpPut("{id}")]

@@ -51,7 +51,7 @@ export class AdminUsersService implements Resolve<any> {
             this._httpClient.get(this.baseUrl + 'getAllUsers/')
                 .subscribe((response: any) => {
                     this.users = response;
-                    console.log(this.users);
+                    // console.log(this.users);
                     
                     this.onUsersChanged.next(this.users);
                     resolve(response);

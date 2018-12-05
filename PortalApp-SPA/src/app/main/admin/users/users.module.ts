@@ -9,7 +9,9 @@ import {
     MatPaginatorModule,
     MatRippleModule,
     MatSelectModule,
-    MatSortModule
+    MatSortModule,
+    MatSnackBarModule,
+    MatTabsModule
 } from '@angular/material';
 
 import { FuseSharedModule } from '@fuse/shared.module';
@@ -31,9 +33,9 @@ const routes: Routes = [
     {
         path     : 'admin-users/:id',
         component: AdminUserComponent,
-        // resolve  : {
-        //     data: AdminUserService
-        // }
+        resolve  : {
+            data: AdminUserService
+        }
     },
 ];
 
@@ -49,7 +51,9 @@ const routes: Routes = [
         MatSelectModule,
         MatSortModule,
         FuseSharedModule,
-        FuseWidgetModule
+        FuseWidgetModule,
+        MatSnackBarModule,
+        MatTabsModule
     ],
     declarations: [
         AdminUsersComponent,

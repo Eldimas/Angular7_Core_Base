@@ -45,7 +45,7 @@ export class AdminUsersComponent implements OnInit {
    //   this.dataSource = this._adminUsersService.users;
    
  this.dataSource = new FilesDataSource(this._adminUsersService, this.paginator, this.sort);
- console.log(this.dataSource);
+//  console.log(this.dataSource);
  
  
    fromEvent(this.filter.nativeElement, 'keyup')
