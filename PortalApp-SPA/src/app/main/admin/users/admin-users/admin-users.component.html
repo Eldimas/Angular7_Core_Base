@@ -97,10 +97,10 @@
 
           <mat-header-row *matHeaderRowDef="displayedColumns; sticky:true"></mat-header-row>
 
-          <mat-row *matRowDef="let element; columns: displayedColumns;"
+          <mat-row *matRowDef="let user; columns: displayedColumns;"
                    class="product"
                    matRipple
-                   [routerLink]="'/apps/e-commerce/products/'+ element.id">
+                   [routerLink]="'/admin/admin-users/'+ user.id">
           </mat-row>
         </mat-table >
 
