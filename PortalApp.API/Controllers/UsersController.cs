@@ -12,8 +12,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace PortalApp.API.Controllers
 {
-    [AllowAnonymous]
-    // [ServiceFilter(typeof(LogUserActivity))]
+    
+    [ServiceFilter(typeof(LogUserActivity))]
     [Route("api/[controller]")]
     [ApiController]
     public class UsersController : ControllerBase
@@ -30,11 +30,11 @@ namespace PortalApp.API.Controllers
             _userRepo = userRepo;
         }
 
-         // [Authorize(Policy = "RequireAdminRole")]
+        [Authorize(Policy = "RequireAdminRole")]
         [HttpGet("getAllUsers")]
         public async Task<IActionResult> GetAllUsers() {
             // var ni = ClaimTypes.NameIdentifier;
-            // var currentUserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            var currentUserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
             var users = await _userRepo.GetAllUsers();
             var usersToReturn = _mapper.Map<IEnumerable<UserForListDto>>(users);
             return Ok(usersToReturn);
@@ -78,13 +78,11 @@ namespace PortalApp.API.Controllers
              return Ok(user);
         }
 
+        [Authorize(Policy = "RequireAdminRole")]
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateUser(int id, UserForUpdateDto userForUpdateDto)
         {
-            if (id != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
-                return Unauthorized();
-
-            var userFromRepo = await _repo.GetUser(id, true);
+           var userFromRepo = await _repo.GetUser(id, true);
 
             _mapper.Map(userForUpdateDto, userFromRepo);
 

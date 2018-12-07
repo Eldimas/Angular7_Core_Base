@@ -19,6 +19,12 @@ import { fuseConfig } from 'app/fuse-config';
 import { AppComponent } from 'app/app.component';
 import { LayoutModule } from 'app/layout/layout.module';
 import { SampleModule } from 'app/main/sample/sample.module';
+import { JwtModule } from '@auth0/angular-jwt';
+
+// tslint:disable-next-line:typedef
+export function tokenGetter() {
+    return localStorage.getItem('token');
+}
 
 const appRoutes: Routes = [
    
@@ -73,7 +79,14 @@ const appRoutes: Routes = [
 
         // App modules
         LayoutModule,
-        SampleModule
+        SampleModule,
+        JwtModule.forRoot({
+          config: {
+            tokenGetter: tokenGetter,
+            whitelistedDomains: ['localhost:5000'],
+            blacklistedRoutes: ['localhost:5000/api/auth']
+          }
+        })
     ],
     bootstrap   : [
         AppComponent

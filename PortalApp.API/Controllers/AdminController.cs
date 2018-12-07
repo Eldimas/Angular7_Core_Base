@@ -41,7 +41,8 @@ namespace PortalApp.API.Controllers
             _cloudinary = new Cloudinary(acc);
         }
 
-        [Authorize(Policy = "RequireAdminRole")]
+        // [Authorize(Policy = "RequireAdminRole")]
+        [Authorize]
         [HttpGet("usersWithRoles")]
         public async Task<IActionResult> GetUsersWithRoles()
         {

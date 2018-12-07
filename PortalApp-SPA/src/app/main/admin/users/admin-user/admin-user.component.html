@@ -1,4 +1,4 @@
-<div id="product" class="page-layout carded fullwidth inner-scroll">
+<div id="user" class="page-layout carded fullwidth inner-scroll">
 
   <!-- TOP BACKGROUND -->
   <div class="top-bg accent"></div>
@@ -22,34 +22,34 @@
                   <img *ngIf="!user.images[0]" [src]="'assets/images/ecommerce/user-image-placeholder.png'"> -->
               </div>
 
-              <!-- <div fxLayout="column" fxLayoutAlign="start start"
-                   [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+              <div fxLayout="column" fxLayoutAlign="start start"
+                   [@animate]="{value:'*',params:{delay:'100ms',x:'-50px'}}">
                   <div class="h2" *ngIf="pageType ==='edit'">
-                      {{user.name}}
+                      {{adminUser.userName}}
                   </div>
                   <div class="h2" *ngIf="pageType ==='new'">
                       New user
                   </div>
                   <div class="subtitle secondary-text">
-                      <span>user Detail</span>
+                      <span>Подробности</span>
                   </div>
-              </div> -->
+              </div>
           </div>
           <!-- / APP TITLE -->
 
           <!-- <button mat-raised-button
                   class="save-user-button"
-                  [disabled]="productForm.invalid"
+                  [disabled]="userForm.invalid"
                   *ngIf="pageType ==='new'" (click)="addProduct()">
               <span>ADD</span>
           </button> -->
 
-          <!-- <button mat-raised-button
+          <button mat-raised-button
                   class="save-user-button"
-                  [disabled]="productForm.invalid || productForm.pristine"
-                  *ngIf="pageType ==='edit'" (click)="saveProduct()">
+                  [disabled]="userForm.invalid || userForm.pristine"
+                  *ngIf="pageType ==='edit'" (click)="saveUser()">
               <span>SAVE</span>
-          </button> -->
+          </button>
       </div>
       <!-- / HEADER -->
 
@@ -58,20 +58,58 @@
 
           <!-- CONTENT -->
           <div class="content">
-            <!-- <form name="productForm" [formGroup]="productForm" class="user w-100-p" fxLayout="column" fxFlex> -->
-              <form name="productForm" class="user w-100-p" fxLayout="column" fxFlex>
-
-                  <mat-tab-group>
+            <form name="userForm" [formGroup]="userForm" class="user w-100-p" fxLayout="column" fxFlex>
+              <mat-tab-group>
 
                       <mat-tab label="Basic Info">
 
-                        Basic InfoBasic InfoBasic InfoBasic Info
+                        <div class="tab-content p-24" fusePerfectScrollbar>
+                          <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
+                            <mat-label>User Name</mat-label>
+                            <input matInput placeholder="User Name"
+                                   name="userName"
+                                   formControlName="userName"
+                                   required>
+                          </mat-form-field>
+
+                          <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
+                              <mat-label>Gender</mat-label>
+                              <input matInput placeholder="Gender"
+                                     name="gender"
+                                     formControlName="gender">
+                            </mat-form-field>
+
+                            <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
+                                <mat-label>City</mat-label>
+                                <input matInput placeholder="City"
+                                       name="city"
+                                       formControlName="city">
+                              </mat-form-field>
+
+                              <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
+                                  <mat-label>Country</mat-label>
+                                  <input matInput placeholder="Country"
+                                         name="country"
+                                         formControlName="country">
+                                </mat-form-field>
+
+                          <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
+                              <mat-label>User Introduction</mat-label>
+                              <textarea matInput placeholder="User Introduction"
+                                        name="introduction"
+                                        formControlName="introduction"
+                                        rows="3">
+                              </textarea>
+                          </mat-form-field>
+                        </div>
 
                       </mat-tab>
 
-                      <mat-tab label="Two Info">
+                      <mat-tab label="Roles">
 
-                        Basic InfoBasic InfoBasic InfoBasic Info
+                        <div class="tab-content p-24" fusePerfectScrollbar>
+                        Roles Roles Roles Roles Roles Roles Roles Roles Roles Roles Roles   
+                        </div>
 
                       </mat-tab>
 

@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from 'environments/environment';
+import { User } from 'app/_models/user';
 
 
 @Injectable({
@@ -12,13 +13,13 @@ export class AdminUserService implements Resolve<any> {
   baseUrl = environment.apiUrl + 'users/';
     routeParams: any;
     user: any;
-    onProductChanged: BehaviorSubject<any>;
+    onUserChanged: BehaviorSubject<any>;
 
     /**
      *
      */
     constructor(private _httpClient: HttpClient) {
-        this.onProductChanged = new BehaviorSubject({});
+        this.onUserChanged = new BehaviorSubject({});
     }
 
     resolve(
@@ -39,7 +40,7 @@ export class AdminUserService implements Resolve<any> {
         return new Promise((resolve, reject) => {
             if ( this.routeParams.id === 'new' )
             {
-                this.onProductChanged.next(false);
+                this.onUserChanged.next(false);
                 resolve(false);
             }
             else
@@ -48,10 +49,30 @@ export class AdminUserService implements Resolve<any> {
                     .subscribe((response: any) => {
                         this.user = response;
                         
-                        this.onProductChanged.next(this.user);
+                        this.onUserChanged.next(this.user);
                         resolve(response);
                     }, reject);
             }
+        });
+    }
+
+    // saveUser(user): Promise<any>
+    // {
+    //     return new Promise((resolve, reject) => {
+    //         this._httpClient.post(this.baseUrl + user.id, user)
+    //             .subscribe((response: any) => {
+    //                 resolve(response);
+    //             }, reject);
+    //     });
+    // }
+
+    saveUser(id: number, user: User): Promise<any>
+    {
+        return new Promise((resolve, reject) => {
+            this._httpClient.put(this.baseUrl + user.id, user)
+                .subscribe((response: any) => {
+                    resolve(response);
+                }, reject);
         });
     }
 }
