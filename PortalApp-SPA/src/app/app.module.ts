@@ -20,6 +20,7 @@ import { AppComponent } from 'app/app.component';
 import { LayoutModule } from 'app/layout/layout.module';
 import { SampleModule } from 'app/main/sample/sample.module';
 import { JwtModule } from '@auth0/angular-jwt';
+import { HomeModule } from './main/home/home.module';
 
 // tslint:disable-next-line:typedef
 export function tokenGetter() {
@@ -40,14 +41,14 @@ const appRoutes: Routes = [
         path        : 'admin',
         loadChildren: './main/admin/admin.module#AdminModule'
     },
-    // {
-    //     path      : '**',
-    //     redirectTo: 'sample'
-    // },
     {
         path      : '**',
-        redirectTo: '/pages/auth/login-2'
-    }
+        redirectTo: 'home'
+    },
+    // {
+    //     path      : '**',
+    //     redirectTo: '/pages/auth/login-2'
+    // }
 ];
 
 @NgModule({
@@ -80,6 +81,7 @@ const appRoutes: Routes = [
         // App modules
         LayoutModule,
         SampleModule,
+        HomeModule,
         JwtModule.forRoot({
           config: {
             tokenGetter: tokenGetter,

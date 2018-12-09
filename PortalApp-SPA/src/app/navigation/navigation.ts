@@ -7,7 +7,7 @@ export const navigation: FuseNavigation[] = [
         translate: 'NAV.MAIN_PAGE',
         type     : 'item',
         icon     : 'home',
-        url      : '/dashboard'
+        url      : '/home'
     },
     {
         id       : 'tasks',

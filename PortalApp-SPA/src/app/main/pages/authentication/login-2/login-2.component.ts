@@ -116,7 +116,7 @@ export class Login2Component implements OnInit
             console.log(error);
             
           }, () => {
-            this.router.navigate(['/sample']);
+            this.router.navigate(['/home']);
           });
     }
 
