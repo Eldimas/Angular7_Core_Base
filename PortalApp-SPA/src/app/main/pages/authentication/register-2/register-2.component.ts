@@ -136,13 +136,9 @@ export class Register2Component implements OnInit, OnDestroy
         if (this.registerForm.valid) {
           this.user = Object.assign({}, this.registerForm.value);
           this.authService.register(this.user).subscribe(() => {
-            // this.alertify.success('Registration successful');
-            console.log('Registration successful');
-            
+            this.openSnackBar('Registered in successfully');
           }, error => {
-              console.log('error', error);
-              
-            // this.alertify.error(error);
+              this.openSnackBar(error);
           }, () => {
             this.authService.login(this.user).subscribe(() => {
               this.router.navigate(['/home']);
