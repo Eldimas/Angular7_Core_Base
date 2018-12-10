@@ -42,8 +42,9 @@ namespace PortalApp.API.Controllers
         public async Task<IActionResult> Register(UserForRegisterDto userForRegisterDto)
         {
             var userToCreate = _mapper.Map<User>(userForRegisterDto);
-
-            var result = await _userManager.CreateAsync(userToCreate, userForRegisterDto.Password);
+            // var result = await _userManager.CreateAsync(userToCreate, userForRegisterDto.Password);
+                _userManager.CreateAsync(userToCreate, userForRegisterDto.Password).Wait();
+                var result = await _userManager.AddToRoleAsync(userToCreate, "Member");
 
             var userToReturn = _mapper.Map<UserForDetailedDto>(userToCreate);
 
@@ -54,6 +55,7 @@ namespace PortalApp.API.Controllers
             }
 
             return BadRequest(result.Errors);
+            return Ok();
         }
 
         [HttpPost("login")]
