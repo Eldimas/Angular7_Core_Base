@@ -55,7 +55,7 @@ namespace PortalApp.API.Controllers
             }
 
             return BadRequest(result.Errors);
-            return Ok();
+            // return Ok();
         }
 
         [HttpPost("login")]
