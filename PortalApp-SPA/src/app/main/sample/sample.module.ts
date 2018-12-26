@@ -5,6 +5,11 @@ import { TranslateModule } from '@ngx-translate/core';
 import { FuseSharedModule } from '@fuse/shared.module';
 
 import { SampleComponent } from './sample.component';
+import { NavtreeComponent } from './navtree/navtree.component';
+import { MatTreeModule } from '@angular/material/tree';
+import { MatCheckboxModule, MatFormFieldModule, MatIconModule, MatInputModule, MatButtonModule } from '@angular/material';
+import { Navtree01Component } from './navtree01/navtree01.component';
+import { Navtree02Component } from './navtree02/navtree02.component';
 
 const routes = [
     {
@@ -15,15 +20,30 @@ const routes = [
 
 @NgModule({
     declarations: [
-        SampleComponent
+        SampleComponent,
+        NavtreeComponent,
+        Navtree01Component,
+        Navtree02Component
     ],
     imports     : [
         RouterModule.forChild(routes),
         TranslateModule,
-        FuseSharedModule
+        FuseSharedModule,
+        MatTreeModule,
+        MatCheckboxModule,
+        MatFormFieldModule,
+        MatIconModule,
+        MatInputModule,
+        MatButtonModule
     ],
     exports     : [
-        SampleComponent
+        SampleComponent,
+        MatTreeModule,
+        MatCheckboxModule,
+        MatFormFieldModule,
+        MatIconModule,
+        MatInputModule,
+        MatButtonModule
     ]
 })
 

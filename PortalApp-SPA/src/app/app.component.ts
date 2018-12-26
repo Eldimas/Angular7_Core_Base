@@ -83,19 +83,15 @@ export class AppComponent implements OnInit, OnDestroy {
                       this.navigs.push(nav);
                     });
 
-                    console.log('last navig: ', this.navigs);
+                    // console.log('last navig: ', this.navigs);
 
-                    // Register the new navigation
-                    this._fuseNavigationService.register('navig', navigs);
+                    // // Register the new navigation
+                    // this._fuseNavigationService.register('navig', navigs);
 
-                    // Set the current navigation
-                    this._fuseNavigationService.setCurrentNavigation('navig');
+                    // // Set the current navigation
+                    // this._fuseNavigationService.setCurrentNavigation('navig');
 
-                    // regs.forEach(region => {
-                    //   const regForSel = new RegionForSelection(region);
-                    //   this.regions.push(regForSel);
-                    // });
-                    // this.regions = regs;
+                    
                 },
                 err => console.log(err),
                 () => console.log('completed')
