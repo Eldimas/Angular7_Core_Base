@@ -133,6 +133,33 @@ export class Navtree01Component {
   private _getChildren = (node: FileNode) => node.childGroups;
 
   // tslint:disable-next-line:typedef
+  addNewItem(node) {
+    console.log('node: ', node);
+    const tdNode = new FileNode();
+      tdNode.name = 'New Element';
+      tdNode.expanded = false;
+      tdNode.id = '99';
+      tdNode.selected = false; 
+      tdNode.childGroups = [];
+    
+    
+    // tslint:disable-next-line:no-non-null-assertion
+    // this.database.insertItem(parentNode!, '');
+    // tslint:disable-next-line:no-non-null-assertion
+    // this.nestedDataSource.insertItem(node!, tdNode);
+    this.insertItem(node, tdNode);
+    this.nestedTreeControl.expand(node);
+  }
+
+  // tslint:disable-next-line:typedef
+  insertItem(parent: FileNode, tdItem: FileNode) {
+    if (parent.childGroups) {
+      parent.childGroups.push(tdItem);
+      // this.dataChange.next(this.data);
+    }
+  }
+
+  // tslint:disable-next-line:typedef
   changeState(node) {
     node.expanded = !node.expanded;
     console.log(node);

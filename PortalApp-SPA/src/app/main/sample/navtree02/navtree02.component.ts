@@ -18,6 +18,8 @@ export class TodoItemFlatNode {
   item: string;
   level: number;
   expandable: boolean;
+  id: string;
+  name: string;
 }
 
 //#region Old TREE_DATA
@@ -50,6 +52,7 @@ export class TodoItemNode {
   expanded: boolean;
   id: string;
   selected: boolean;
+  item: string;
 }
 
 /**
@@ -186,9 +189,11 @@ export class ChecklistDatabase {
       const node = new TodoItemNode();
       // node.name = key;
       node.name = value.name;
-      console.log('value: ', value);
-      console.log('key: ', key);
-      console.log('accumulator: ', accumulator);
+      node.id = value.id;
+    
+      // console.log('value: ', value);
+      // console.log('key: ', key);
+      // console.log('accumulator: ', accumulator);
       
 
       if (value != null) {
@@ -198,7 +203,7 @@ export class ChecklistDatabase {
           node.name = value.name;
         }
       }
-        console.log('accumulator.concat(node): ', accumulator.concat(node));
+        // console.log('accumulator.concat(node): ', accumulator.concat(node));
         
       return accumulator.concat(node);
     }, []);
@@ -214,8 +219,11 @@ export class ChecklistDatabase {
   }
 
   // tslint:disable-next-line:typedef
-  updateItem(node: TodoItemNode, name: string) {
-    // node.item = name;
+  updateItem(node: TodoItemNode, name: string, id: string) {
+    node.item = name;
+    node.name = name;
+    node.id = id;
+    node.childGroups = null;
     this.dataChange.next(this.data);
     console.log('data: ', this.data);
     
@@ -278,10 +286,17 @@ constructor(private database: ChecklistDatabase) {
    */
   transformer = (node: TodoItemNode, level: number) => {
     const existingNode = this.nestedNodeMap.get(node);
-    const flatNode = existingNode && existingNode.item === node.name
-        ? existingNode
-        : new TodoItemFlatNode();
+    // const flatNode = existingNode && existingNode.item === node.name
+    //     ? existingNode
+    //     : new TodoItemFlatNode();
+    const flatNode = existingNode 
+    && existingNode.id === node.id 
+    && existingNode.name === node.name
+    ? existingNode
+    : new TodoItemFlatNode();
     flatNode.item = node.name;
+    flatNode.id = node.id;
+    flatNode.name = node.name;
     flatNode.level = level;
     flatNode.expandable = !!node.childGroups;
     this.flatNodeMap.set(flatNode, node);
@@ -398,11 +413,22 @@ constructor(private database: ChecklistDatabase) {
 
   /** Save the node to database */
   // tslint:disable-next-line:typedef
-  saveNode(node: TodoItemFlatNode, itemValue: string) {
+  saveNode(node: TodoItemFlatNode, name: string, id: string) {
+    console.log('save node: ', node);
+    
     const nestedNode = this.flatNodeMap.get(node);
     // tslint:disable-next-line:no-non-null-assertion
-    this.database.updateItem(nestedNode!, itemValue);
+    this.database.updateItem(nestedNode!, name, id);
   
   }
+
+
+// tslint:disable-next-line:typedef
+  // saveNode(node: TodoItemNode, itemValue: string) {
+  //   // const nestedNode = this.flatNodeMap.get(node);
+  //   // tslint:disable-next-line:no-non-null-assertion
+  //   this.database.updateItem(node!, itemValue);
+  
+  // }
 
 }
