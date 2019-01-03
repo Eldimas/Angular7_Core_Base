@@ -82,6 +82,7 @@ const appRoutes: Routes = [
         LayoutModule,
         SampleModule,
         HomeModule,
+        
         JwtModule.forRoot({
           config: {
             tokenGetter: tokenGetter,

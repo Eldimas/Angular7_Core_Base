@@ -10,8 +10,8 @@ using PortalApp.API.Data;
 namespace PortalApp.API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20181225050915_initi ddb")]
-    partial class initiddb
+    [Migration("20190103054619_init with navig")]
+    partial class initwithnavig
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -137,15 +137,18 @@ namespace PortalApp.API.Migrations
 
             modelBuilder.Entity("PortalApp.API.Models.Navig", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<Guid?>("Id")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("Icon");
 
-                    b.Property<int?>("NavigId");
+                    b.Property<Guid?>("NavigId");
 
                     b.Property<string>("Title");
+
+                    b.Property<string>("TitleEng");
+
+                    b.Property<string>("TitleKaz");
 
                     b.Property<string>("Type");
 

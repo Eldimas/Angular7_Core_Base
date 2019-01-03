@@ -3,6 +3,7 @@ using System.Linq;
 using PortalApp.API.Models;
 using Microsoft.AspNetCore.Identity;
 using Newtonsoft.Json;
+using System;
 
 namespace PortalApp.API.Data
 {
@@ -10,11 +11,16 @@ namespace PortalApp.API.Data
     {
         private readonly UserManager<User> _userManager;
         private readonly RoleManager<Role> _roleManager;
+        private readonly DataContext _context;
 
-        public Seed(UserManager<User> userManager, RoleManager<Role> roleManager)
+        public Seed(
+            UserManager<User> userManager,
+            RoleManager<Role> roleManager,
+            DataContext context)
         {
             _userManager = userManager;
             _roleManager = roleManager;
+            _context = context;
         }
 
         public void SeedUsers()
@@ -54,9 +60,62 @@ namespace PortalApp.API.Data
                 if (result.Succeeded)
                 {
                     var admin = _userManager.FindByNameAsync("Admin").Result;
-                    _userManager.AddToRolesAsync(admin, new[] {"Admin", "Moderator"}).Wait();
+                    _userManager.AddToRolesAsync(admin, new[] { "Admin", "Moderator" }).Wait();
                 }
             }
         }
+
+        public void SeedMenu()
+        {
+
+            if (!_context.Navigs.Any())
+            {
+
+                var navigHome = new Navig()
+                {
+                    Id = Guid.NewGuid(),
+                    Title = "Главная",
+                    TitleEng = "Main",
+                    TitleKaz = "Главная(Каз)",
+                    Type = "item",
+                    Icon = "home",
+                    Url = "/home",
+                    Children = null
+
+                };
+
+
+
+                var navig2 = new Navig()
+                {
+                    Id = Guid.NewGuid(),
+                    Title = "Админка",
+                    TitleEng = "Administration",
+                    TitleKaz = "AdministrationKaz",
+                    Type = "collapsable",
+                    Icon = "edit",
+                    Url = null,
+                    Children = new List<Navig>() {
+                        new Navig() {Id = Guid.NewGuid(), Title = "Users", TitleEng = "UsersEng", TitleKaz = "UsersKaz", Type = "item", Icon = "person", Url = "/admin/admin-users", Children = null},
+
+                        new Navig() {Id = Guid.NewGuid(), Title = "Редактирование меню", TitleEng = "Edit Menu", TitleKaz = "Edit Menu Kaz", Type = "item", Icon = "attach_money", Url = "/admin/edit-menu", Children = null},
+
+
+                    }
+                };
+
+                _context.Navigs.Add(navigHome);
+                _context.Navigs.Add(navig2);
+                // _context.Navigs.Add(navig);
+
+                _context.SaveChanges();
+
+
+
+
+            }
+        }
+
+
     }
 }
