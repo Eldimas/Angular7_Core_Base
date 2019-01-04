@@ -25,7 +25,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-
+using PortalApp.API.Data.Repos;
 
 namespace PortalApp.API
 {
@@ -100,6 +100,7 @@ namespace PortalApp.API
            services.AddScoped<IAuthRepository, AuthRepository>();
             services.AddScoped<IPortalRepository, PortalRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<ICourseRepository, CourseRepository>();
             services.AddScoped<LogUserActivity>();
         }
 
@@ -133,6 +134,7 @@ namespace PortalApp.API
             
             seeder.SeedUsers();
             seeder.SeedMenu();
+            seeder.SeedCourses();
             app.UseCors(x => x.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
             app.UseAuthentication();
             app.UseDefaultFiles();

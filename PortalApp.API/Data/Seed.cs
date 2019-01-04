@@ -23,6 +23,20 @@ namespace PortalApp.API.Data
             _context = context;
         }
 
+        public void SeedCourses() {
+            
+            if(!_context.Courses.Any()) {
+                var coursesData = System.IO.File.ReadAllText("Data/JsonData/CourseSeedData.json");
+                var courses = JsonConvert.DeserializeObject<List<Course>>(coursesData);
+
+                foreach (var course in courses)
+                {
+                    _context.Courses.Add(course);
+                }
+                _context.SaveChanges();
+            }
+        }
+
         public void SeedUsers()
         {
             if (!_userManager.Users.Any())
@@ -84,6 +98,19 @@ namespace PortalApp.API.Data
 
                 };
 
+                var navigCourses = new Navig()
+                {
+                    Id = Guid.NewGuid(),
+                    Title = "Курсы",
+                    TitleEng = "CoursesEng",
+                    TitleKaz = "Courses(Каз)",
+                    Type = "item",
+                    Icon = "home",
+                    Url = "/courses",
+                    Children = null
+
+                };
+
 
 
                 var navig2 = new Navig()
@@ -105,6 +132,7 @@ namespace PortalApp.API.Data
                 };
 
                 _context.Navigs.Add(navigHome);
+                _context.Navigs.Add(navigCourses);
                 _context.Navigs.Add(navig2);
                 // _context.Navigs.Add(navig);
 
