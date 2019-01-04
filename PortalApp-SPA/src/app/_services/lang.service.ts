@@ -28,7 +28,7 @@ export class LangService {
         const http$ = this._navigService.getNavig(lang);
         http$.subscribe(
             navigs => {
-                console.log('navig: ', navigs);
+                // console.log('navig: ', navigs);
                 // this.navigs = navigs;
 
                 navigs.forEach(navig => {
