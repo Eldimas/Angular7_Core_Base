@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PortalApp.API.Data;
+using PortalApp.API.Dtos;
 using PortalApp.API.Models;
 
 namespace PortalApp.API.Controllers
@@ -42,12 +43,7 @@ namespace PortalApp.API.Controllers
                 }
             }
 
-
-
-
-            // var navList = new List<Navig>();
-
-            var rootMenuItems = await _context.Navigs.FromSql("SELECT * FROM Navigs where NavigId is null")
+              var rootMenuItems = await _context.Navigs.FromSql("SELECT * FROM Navigs where NavigId is null")
             .Select(x => x.Id.Value).ToListAsync<Guid>();
 
 
@@ -61,7 +57,43 @@ namespace PortalApp.API.Controllers
 
             return Ok(values);
 
-            // return Ok();
         }
+
+
+        [HttpPost("add")]
+        public async Task<IActionResult> Add(NavigUpdateDto navigUpdateDto)
+        {
+
+            var parentNavig = await _context.Navigs.FirstOrDefaultAsync(x => x.Id == navigUpdateDto.ParentId);
+
+            if (parentNavig == null)
+            {
+                return BadRequest("error");
+            }
+
+            if(parentNavig.Children == null){
+                parentNavig.Children = new List<Navig>();
+                parentNavig.Type = "group";
+            }
+
+            var newNav = new Navig(){
+                Id=navigUpdateDto.Id,
+                Title = navigUpdateDto.Title,
+                TitleEng = navigUpdateDto.TitleEng,
+                TitleKaz = navigUpdateDto.TitleKaz,
+                Icon = navigUpdateDto.Icon,
+                Type = "item",
+                Url = navigUpdateDto.Url
+            };
+
+            parentNavig.Children.Add(newNav);
+            _context.SaveChanges();
+
+          
+            return Ok();
+        }
+
+
+
     }
 }

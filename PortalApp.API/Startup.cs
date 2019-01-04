@@ -132,6 +132,7 @@ namespace PortalApp.API
             // app.UseHttpsRedirection();
             
             seeder.SeedUsers();
+            seeder.SeedMenu();
             app.UseCors(x => x.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
             app.UseAuthentication();
             app.UseDefaultFiles();
