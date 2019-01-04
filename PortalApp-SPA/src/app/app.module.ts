@@ -21,6 +21,7 @@ import { LayoutModule } from 'app/layout/layout.module';
 import { SampleModule } from 'app/main/sample/sample.module';
 import { JwtModule } from '@auth0/angular-jwt';
 import { HomeModule } from './main/home/home.module';
+import { ProbaModule } from './main/proba/proba.module';
 
 // tslint:disable-next-line:typedef
 export function tokenGetter() {
@@ -82,6 +83,7 @@ const appRoutes: Routes = [
         LayoutModule,
         SampleModule,
         HomeModule,
+        ProbaModule,
         JwtModule.forRoot({
           config: {
             tokenGetter: tokenGetter,

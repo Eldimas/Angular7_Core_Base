@@ -10,6 +10,14 @@ export const navigation: FuseNavigation[] = [
         url      : '/home'
     },
     {
+        id       : 'proba',
+        title    : 'Proba',
+        type     : 'item',
+        icon     : 'home',
+        url      : '/proba'
+    },
+
+    {
         id       : 'tasks',
         title    : 'Tasks',
         translate: 'NAV.TASKS',
@@ -36,6 +44,8 @@ export const navigation: FuseNavigation[] = [
         type      : 'item',
         url       : '/apps/e-commerce/products'
     },
+
+
     {
         id       : 'administration',
         title    : 'Administration',
