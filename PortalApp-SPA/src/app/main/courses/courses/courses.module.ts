@@ -10,7 +10,8 @@ import { AddCourseComponent } from './add-course/add-course.component';
 
 const routes = [
   { path: 'courses', component: CoursesComponent},
-  { path: 'add-course', component: AddCourseComponent}
+  { path: 'add-course', component: AddCourseComponent},
+  { path: 'edit-course', component: EditCourseComponent}
 ];
 
 @NgModule({

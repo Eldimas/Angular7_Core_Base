@@ -1,7 +1,7 @@
 <div class="page-layout blank p-24" fusePerfectScrollbar>
     <h1>Добавить курс!</h1>
 
-    <form [formGroup]="form">
+    <form [formGroup]="form" (ngSubmit) = "onSubmit()" >
         <!-- <div class="form-group">
       <label>Description</label>
       <input type="text" class="form-control" formControlName="description">
@@ -40,6 +40,8 @@
                 <input matInput formControlName="lessonsCount" />
             </mat-form-field>
         </div>
+        <button mat-button type="submit">Save</button>
+        
     </form>
 </div>
 

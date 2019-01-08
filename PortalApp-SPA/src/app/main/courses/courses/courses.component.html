@@ -1,7 +1,5 @@
 <div class="page-layout blank p-24" fusePerfectScrollbar>
-    <!-- <pre>{{courses | json}}</pre> -->
-    <button mat-button (click)="addCourse()">Click me!</button>
-
+    
     <mat-tab-group>
         <mat-tab label="Beginners">
           <pre>{{ beginnerCourses$ | async | json }}</pre>  

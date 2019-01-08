@@ -68,44 +68,5 @@ export class CoursesComponent implements OnInit {
         // );
     }
 
-    // tslint:disable-next-line:typedef
-    addCourse() {
-
-      const token = localStorage.getItem('token');
-
-        const obs$ = fromPromise(
-            fetch(this.baseUrl + 'addCourse/2', {
-                method: 'POST',
-                mode: 'cors',
-                body: JSON.stringify(this.newCourse),
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: 'Bearer ' + token
-                }
-            }).then(response => {
-                return response.json();
-            })
-        );
-        obs$.subscribe(console.log);
-        // const obs$ = Observable.create(observer => {
-        //     fetch(this.baseUrl + 'addCourse/2', {
-        //         method: 'POST',
-        //         mode: 'cors',
-        //         headers: {
-        //             'Content-Type': 'application/json',
-        //             Authorization: 'Bearer ' + token
-        //         }
-        //     }).then(response => {
-
-        //         return response.json();
-        //     }).then(body => {
-        //         observer.next(body);
-        //         observer.complete();
-        //     }).catch(err => {
-        //         observer.error(err);
-        //     });
-        // });
-
-        // obs$.subscribe(console.log);
-    }
+    
 }
