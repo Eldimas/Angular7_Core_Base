@@ -6,6 +6,8 @@ import { environment } from 'environments/environment';
 import { createHttpObservable } from 'app/utils/util';
 import { map, filter, shareReplay, tap } from 'rxjs/operators';
 import { Course } from 'app/_models/course';
+// import {fromPromise} from 'rxjs/internal-compatibility';
+import { fromPromise } from 'rxjs/observable/fromPromise';
 
 @Component({
     selector: 'app-courses',
@@ -15,6 +17,15 @@ import { Course } from 'app/_models/course';
 export class CoursesComponent implements OnInit {
     baseUrl = environment.apiUrl + 'course/';
     courses: [];
+    newCourse: Course = {
+      id: 1,
+      description: 'description 1',
+      iconUrl: 'iconurl 1',
+      courseListIcon: 'courseListIcon 1',
+      longDescription: 'long description 1',
+      category: 'BEGINNER',
+      lessonsCount: 10
+    };
 
     beginnerCourses$: Observable<Course[]>;
     advancedCourses$: Observable<Course[]>;
@@ -22,26 +33,28 @@ export class CoursesComponent implements OnInit {
     constructor() {}
 
     ngOnInit(): void {
-
-
-        const http$: Observable<Course[]>  = createHttpObservable(this.baseUrl + 'getAllCourses');
+        const http$: Observable<Course[]> = createHttpObservable(
+            this.baseUrl + 'getAllCourses'
+        );
 
         const courses$: Observable<Course[]> = http$.pipe(
-          tap(() => console.log('HTTP request executed')),
-          map(res => Object.values(res)),
-          shareReplay()
+            tap(() => console.log('HTTP request executed')),
+            map(res => Object.values(res)),
+            shareReplay()
         );
 
         courses$.subscribe();
-        
-        this.beginnerCourses$ = courses$
-        .pipe(
-          map(courses => courses.filter(course => course.category === 'BEGINNER'))
+
+        this.beginnerCourses$ = courses$.pipe(
+            map(courses =>
+                courses.filter(course => course.category === 'BEGINNER')
+            )
         );
 
-        this.advancedCourses$ = courses$
-        .pipe(
-          map(courses => courses.filter(course => course.category === 'ADVANCED'))
+        this.advancedCourses$ = courses$.pipe(
+            map(courses =>
+                courses.filter(course => course.category === 'ADVANCED')
+            )
         );
 
         // courses$.subscribe(
@@ -53,5 +66,46 @@ export class CoursesComponent implements OnInit {
         //     noop,
         //     () => console.log('completed')
         // );
+    }
+
+    // tslint:disable-next-line:typedef
+    addCourse() {
+
+      const token = localStorage.getItem('token');
+
+        const obs$ = fromPromise(
+            fetch(this.baseUrl + 'addCourse/2', {
+                method: 'POST',
+                mode: 'cors',
+                body: JSON.stringify(this.newCourse),
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: 'Bearer ' + token
+                }
+            }).then(response => {
+                return response.json();
+            })
+        );
+        obs$.subscribe(console.log);
+        // const obs$ = Observable.create(observer => {
+        //     fetch(this.baseUrl + 'addCourse/2', {
+        //         method: 'POST',
+        //         mode: 'cors',
+        //         headers: {
+        //             'Content-Type': 'application/json',
+        //             Authorization: 'Bearer ' + token
+        //         }
+        //     }).then(response => {
+
+        //         return response.json();
+        //     }).then(body => {
+        //         observer.next(body);
+        //         observer.complete();
+        //     }).catch(err => {
+        //         observer.error(err);
+        //     });
+        // });
+
+        // obs$.subscribe(console.log);
     }
 }

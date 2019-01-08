@@ -27,6 +27,8 @@ namespace PortalApp.API.Helpers
             CreateMap<UserForUpdateDto, User>();
           
             CreateMap<UserForRegisterDto, User>();
+
+            CreateMap<CourseDto, Course>();
             
             // CreateMap<Message, MessageToReturnDto>()
             //     .ForMember(m => m.SenderPhotoUrl, opt => opt

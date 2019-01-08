@@ -4,10 +4,13 @@ import { CoursesComponent } from './courses.component';
 import { RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { FuseSharedModule } from '@fuse/shared.module';
-import { MatTabsModule } from '@angular/material';
+import { MatTabsModule, MatButtonModule, MatFormFieldModule, MatInputModule } from '@angular/material';
+import { EditCourseComponent } from './edit-course/edit-course.component';
+import { AddCourseComponent } from './add-course/add-course.component';
 
 const routes = [
-  { path: 'courses', component: CoursesComponent}
+  { path: 'courses', component: CoursesComponent},
+  { path: 'add-course', component: AddCourseComponent}
 ];
 
 @NgModule({
@@ -16,13 +19,25 @@ const routes = [
         TranslateModule,
         FuseSharedModule,
 
-        MatTabsModule
+        MatTabsModule,
+        MatButtonModule,
+        MatFormFieldModule,
+        MatInputModule
   ],
-  declarations: [CoursesComponent],
+  declarations: [
+    CoursesComponent,
+    EditCourseComponent,
+    AddCourseComponent
+  ],
   exports: [
     CoursesComponent,
+    EditCourseComponent,
+    AddCourseComponent,
 
-    MatTabsModule
+    MatTabsModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule
   ]
 })
 export class CoursesModule { }
